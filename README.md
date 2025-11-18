@@ -76,4 +76,4 @@ npm test
 
 ## 👤 Author
 
-Your Name - frontend@modelia.ai
+Nitish Kumar
