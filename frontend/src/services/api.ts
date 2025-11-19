@@ -42,6 +42,18 @@ export interface AuthResponse {
   user: User;
 }
 
+// Generation types
+export interface Generation {
+  id: string;
+  userId: string;
+  imagePath: string;
+  prompt: string;
+  resultPath: string | null;
+  status: 'pending' | 'completed' | 'failed';
+  createdAt: string;
+  updatedAt: string;
+}
+
 // Auth API
 export const authApi = {
   login: async (data: LoginData): Promise<AuthResponse> => {
@@ -56,6 +68,32 @@ export const authApi = {
 
   getCurrentUser: async (): Promise<User> => {
     const response = await api.get('/auth/me');
+    return response.data;
+  },
+};
+
+// Generation API
+export const generationApi = {
+  createGeneration: async (image: File, prompt: string) => {
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('prompt', prompt);
+
+    const response = await api.post('/generations', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
+
+  getGeneration: async (id: string) => {
+    const response = await api.get(`/generations/${id}`);
+    return response.data;
+  },
+
+  getRecentGenerations: async () => {
+    const response = await api.get('/generations');
     return response.data;
   },
 };
