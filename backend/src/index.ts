@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import authRoutes from './routes/auth.routes.js';
 
 // Load environment variables
 dotenv.config();
@@ -26,8 +27,8 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', message: 'Server is running' });
 });
 
-// Routes will be added here
-// app.use('/api/auth', authRoutes);
+// API Routes
+app.use('/api/auth', authRoutes);
 // app.use('/api/generations', generationRoutes);
 
 // Error handling middleware
